@@ -163,9 +163,26 @@ function getALLUSER(callback) {
     })
 }
 
+
+function deleteUSER(callback) {
+    mongoClient.connect(uri, function (err, client) {
+        if (err) {
+            console.log(err);
+        } else {
+            let db = client.db('Pomodoro');
+            let user = db.collection('user');
+            user.deleteOne({username: "manhld"}, function(err, data) {
+                callback(data)
+            })
+        }
+    })
+}
+
+
 module.exports = {
     registerUser,
     login,
     changePass,
-    getALLUSER
+    getALLUSER,
+    deleteUSER
 };
