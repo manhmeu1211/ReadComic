@@ -1,6 +1,6 @@
 //Mongo db
 const mongoClient = require('mongodb').MongoClient;
-const mongoose = require('mongoose');
+
 const {md5, verifyToken, getToken} = require("../utils");
 
 const uri = "mongodb+srv://ngant97:1@cluster0-m4uoy.mongodb.net/admin?retryWrites=true&w=majority";
