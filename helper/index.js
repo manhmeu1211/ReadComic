@@ -156,7 +156,7 @@ function getALLUSER(callback) {
         } else {
             let db = client.db('Pomodoro');
             let user = db.collection('user');
-            user.find(function(err, data) {
+            user.find().toArray(function(err, data) {
                 callback(data)
             })
         }
