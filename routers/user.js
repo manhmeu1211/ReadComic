@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {registerUser, login,changePass} = require('../helper');
+const {registerUser, login, changePass, getALLUSER} = require('../helper');
 
 router.post('/user', (req, res) => {
     let {name, username, password, address, phoneNumber, gender} = req.body
@@ -51,19 +51,25 @@ router.post('/login', (req, res) => {
     })
 });
 router.post('/user/reset-pass', (req, res) => {
-    let {username, password,rePassword} = req.body
-    changePass(username, password,rePassword, function (data, notifi) {
+    let {username, password, rePassword} = req.body
+    changePass(username, password, rePassword, function (data, notifi) {
         if (data === 1) {
             res.status(200).send({
                 success: "1",
                 response: notifi
             })
-        }else{
+        } else {
             res.status(404).send({
                 success: "0",
                 error: notifi
             })
         }
+    })
+});
+
+router.get('/user/getAll', (req, res) => {
+    getALLUSER(data => {
+        res.send(data)
     })
 });
 

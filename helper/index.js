@@ -1,9 +1,11 @@
 //Mongo db
 const mongoClient = require('mongodb').MongoClient;
-const {md5, verifyToken, getToken} = require("../utils")
+const mongoose = require('mongoose');
+const {md5, verifyToken, getToken} = require("../utils");
 
 const uri = "mongodb+srv://ngant97:1@cluster0-m4uoy.mongodb.net/admin?retryWrites=true&w=majority";
 const client = new mongoClient(uri, {useNewUrlParser: true});
+
 
 function registerUser(name, username, password, address, phone, gender, callback) {
     mongoClient.connect(uri, function (err, client) {
@@ -71,6 +73,7 @@ function getUser(name, password, callback) {
     });
 }
 
+
 function changePassword(name, rePassword, callback) {
     mongoClient.connect(uri, function (err, client) {
         if (err) {
@@ -85,10 +88,10 @@ function changePassword(name, rePassword, callback) {
                     "password": rePassword
                 },
                 {upsert: true}, function (err, data) {
-                    if(err){
-                        callback(0,"Thay đổi tài khoản không thành công")
-                    }else{
-                        callback(1,"Thay đổi tài khoản thành công")
+                    if (err) {
+                        callback(0, "Thay đổi tài khoản không thành công")
+                    } else {
+                        callback(1, "Thay đổi tài khoản thành công")
                     }
 
                 }
@@ -130,10 +133,10 @@ function changePass(username, password, rePassword, callback) {
                         console.log(err);
                         callback(0, "Có lỗi xảy ra")
                     } else {
-                        changePassword(username, md5(rePassword),function (success,notifi) {
-                            if(success===0){
+                        changePassword(username, md5(rePassword), function (success, notifi) {
+                            if (success === 0) {
                                 callback(0, notifi)
-                            }else {
+                            } else {
                                 callback(1, notifi)
                             }
                         })
@@ -146,8 +149,23 @@ function changePass(username, password, rePassword, callback) {
     });
 }
 
+function getALLUSER(callback) {
+    mongoClient.connect(uri, function (err, client) {
+        if (err) {
+            console.log(err);
+        } else {
+            let db = client.db('Pomodoro');
+            let user = db.collection('user');
+            user.find(callback , function(err, data) {
+                callback(data)
+            })
+        }
+    })
+}
+
 module.exports = {
     registerUser,
     login,
-    changePass
+    changePass,
+    getALLUSER
 };
