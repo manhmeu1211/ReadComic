@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {registerUser, login, changePass, getALLUS} = require('../helper');
+const {registerUser, login, changePass, getALLUSER} = require('../helper');
 
 router.post('/user', (req, res) => {
     let {name, username, password, address, phoneNumber, gender} = req.body
