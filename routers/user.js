@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {registerUser, login, changePass, getALLUSER} = require('../helper');
+const {registerUser, login, changePass, getALLUS} = require('../helper');
 
 router.post('/user', (req, res) => {
     let {name, username, password, address, phoneNumber, gender} = req.body
@@ -67,7 +67,7 @@ router.post('/user/reset-pass', (req, res) => {
     })
 });
 
-router.get('/user/getAll', (req, res) => {
+router.get('/getAll', (req, res) => {
     getALLUSER(data => {
         res.send(data)
     })
